@@ -1,41 +1,40 @@
 import { Component, OnInit } from '@angular/core';
-
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'chat-interface',
   templateUrl: './chat-interface.component.html',
-  styleUrls: ['./chat-interface.component.scss']
+  styleUrls: ['./chat-interface.component.scss'],
 })
 export class ChatInterfaceComponent implements OnInit {
+  commentaires: { name?: string; date?: Date; message?: string }[] = [
+    { name: 'testname', date: new Date(), message: 'testmessage' },
+  ];
+  infos = {
+    name: 'med',
+    email: 'med@gmail.com',
+    tel: '0622254896',
+  };
 
-  commentaires:{name?:string, date?:Date, message?:string}[] = [
-    
-  ]
-  
+  message: string = '';
+  constructor() {}
 
-  message:string = ""
-  constructor() { }
+  ngOnInit(): void {}
 
-  ngOnInit(): void {
+  addComment(commentForm: NgForm) {
+    const comment = {
+      name: 'nameTest',
+      date: new Date(),
+      message: commentForm.value.message,
+    };
+
+    this.commentaires.push(comment);
+    commentForm.reset();
   }
 
-  addComment(){
-    if (this.message === ""){
-      alert("enter a comment")
-    }else{
-      const commentaire={
-        name:'nameTest',
-        date:new Date(),
-        message:this.message
-      };
-    
-      this.commentaires.push(commentaire);
-      this.message = ""
-      console.log(this.commentaires)
-    }
+  deleteAll() {
+    this.commentaires = [];
+    this.message = '';
+    console.log(this.commentaires);
   }
-  deleteAll(){
-    this.commentaires = []
-  }
-
 }

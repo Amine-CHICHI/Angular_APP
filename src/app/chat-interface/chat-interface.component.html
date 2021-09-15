@@ -1,13 +1,72 @@
 <p>chat-interface works!</p>
-<label for='comment'>New Comment<br></label>
-<input id="comment" type="text" placeholder='Enter your comment' [(ngModel)] = "message">
-<button (click)= "addComment()">add comment</button>
-<button (click)= "deleteAll()">Clear comments</button>
-
-<ul>
-    <div *ngFor = "let comment of commentaires">
-        <li>{{(comment.date | date: "medium") + '&nbsp;&nbsp; --------->&nbsp;&nbsp;'}}
-            {{comment.name + " : "}}{{comment.message}}
-        </li>
+<div class="container">
+  <div class="card">
+    <div class="card-header bg-primary text-light">About</div>
+    <div class="card-body">
+      <!-- Infos section -->
+      <div>
+        <h3>Infos :</h3>
+        <ul class="list-group">
+          <li class="list-group-item">
+            Nom : <strong>{{ infos.name }}</strong>
+          </li>
+          <li class="list-group-item">
+            Email : <strong>{{ infos.email }}</strong>
+          </li>
+          <li class="list-group-item">
+            Tel : <strong>{{ infos.tel }}</strong>
+          </li>
+        </ul>
+      </div>
+      <!-- comments form section -->
+      <div class="mt-4">
+        <form #form="ngForm" (ngSubmit)="addComment(form)">
+          <div class="row d-flex justify-content-center">
+            <label for="comment" class="col-auto col-form-label">
+              <strong>Message :</strong>
+            </label>
+            <div class="col-sm-4">
+              <input
+                id="comment"
+                class="form-control"
+                type="text"
+                placeholder="Enter your comment"
+                name="message"
+                ngModel
+                required
+              />
+            </div>
+            <div class="col-sm-3">
+              <button
+                [disabled]="!form.valid"
+                class="btn btn-primary me-2"
+                type="submit"
+              >
+                add comment
+              </button>
+              <button
+                class="btn btn-danger"
+                type="button"
+                (click)="deleteAll()"
+              >
+                Clear comments
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+      <!-- Display comments section -->
+      <div>
+        <h3>Comments :</h3>
+        <ul class="list-group">
+          <li class="list-group-item" *ngFor="let comment of commentaires">
+            {{ comment.name + " : " }}{{ comment.message }}
+            <span class="badge bg-secondary float-end">{{
+              comment.date | date: "medium"
+            }}</span>
+          </li>
+        </ul>
+      </div>
     </div>
-</ul>
+  </div>
+</div>
